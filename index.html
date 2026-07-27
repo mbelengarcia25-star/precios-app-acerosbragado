@@ -33,6 +33,7 @@
     font-family:var(--sans);
     -webkit-tap-highlight-color:transparent;
     overscroll-behavior:none;
+    touch-action:manipulation;
   }
   body{ display:flex; flex-direction:column; }
 
@@ -491,7 +492,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     var delim = detectDelimiter(lines[0]);
     var headers = parseCsvLine(lines[0], delim);
 
-    var idxCodigo = findColumn(headers, ["codigo", "cod."]);
+    var idxCodigo = findColumn(headers, ["cod"]);
     var idxDesc   = findColumn(headers, ["descrip", "articulo", "nombre", "detalle"]);
     var idxPrecio = findColumn(headers, ["precio", "importe", "monto"]);
     var idxUnidad = findColumn(headers, ["unidad", "um", "medida"]);
@@ -523,7 +524,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     if (!aoa || aoa.length < 2) throw new Error("El archivo no tiene filas suficientes.");
     var headers = aoa[0].map(function(h){ return (h===undefined||h===null) ? "" : h.toString(); });
 
-    var idxCodigo = findColumn(headers, ["codigo", "cod."]);
+    var idxCodigo = findColumn(headers, ["cod"]);
     var idxDesc   = findColumn(headers, ["descrip", "articulo", "nombre", "detalle"]);
     var idxPrecio = findColumn(headers, ["precio", "importe", "monto"]);
     var idxUnidad = findColumn(headers, ["unidad", "um", "medida"]);
