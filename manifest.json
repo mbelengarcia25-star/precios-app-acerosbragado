@@ -1,0 +1,13 @@
+{
+  "name": "Precios Aceros Bragado",
+  "short_name": "Precios AB",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#171b21",
+  "theme_color": "#20262f",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
