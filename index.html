@@ -300,7 +300,7 @@
 <footer>
   <button id="updateBtn"><span class="dot"></span>Actualizar lista</button>
   <input id="fileInput" type="file" accept=".csv,.xlsx,.xls,text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-  <div class="foot-note" id="footNote">Se actualiza sola con conexión · tocá para forzar una carga manual</div>
+  <div class="foot-note" id="footNote">Busca precios.xlsx/precios.csv con conexión · tocá para forzar carga manual</div>
 </footer>
 
 <div id="overlay">
@@ -902,19 +902,28 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   });
 
   function tryFetchRemoteData(){
-    fetch("./precios.csv", { cache: "no-store" })
+    fetch("./precios.xlsx", { cache: "no-store" })
       .then(function(resp){
-        if (!resp.ok) throw new Error("sin archivo remoto");
-        return resp.text();
+        if (!resp.ok) throw new Error("sin xlsx remoto");
+        return resp.arrayBuffer();
       })
-      .then(function(text){
-        var rows = parseCsv(text);
-        if (save(rows)){
-          renderStatus();
-          doSearch();
-        }
+      .then(function(buf){
+        var rows = parseExcel(buf);
+        if (save(rows)){ renderStatus(); doSearch(); }
       })
-      .catch(function(){ /* sin conexión o sin archivo todavía: seguimos con lo que ya está guardado */ });
+      .catch(function(){
+        // si no hay precios.xlsx, probamos con precios.csv
+        fetch("./precios.csv", { cache: "no-store" })
+          .then(function(resp){
+            if (!resp.ok) throw new Error("sin csv remoto");
+            return resp.text();
+          })
+          .then(function(text){
+            var rows = parseCsv(text);
+            if (save(rows)){ renderStatus(); doSearch(); }
+          })
+          .catch(function(){ /* sin conexión o sin archivo todavía: seguimos con lo que ya está guardado */ });
+      });
   }
 
   // ---------- init ----------

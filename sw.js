@@ -32,7 +32,8 @@ self.addEventListener("activate", function(event){
 });
 
 self.addEventListener("fetch", function(event){
-  var isPriceFile = event.request.url.indexOf("precios.csv") !== -1;
+  var isPriceFile = event.request.url.indexOf("precios.csv") !== -1 ||
+                     event.request.url.indexOf("precios.xlsx") !== -1;
 
   if (isPriceFile){
     // precios.csv: siempre intenta traer la versión más nueva primero;
